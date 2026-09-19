@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://astro-paper.pages.dev/",
+    url: "https://my-port-folio-tau-ashy.vercel.app/",
     title: "Seunghoon Jung",
     description:
       "Portfolio of Seunghoon Jung, a software developer building manufacturing digital twin tools and full-stack web apps.",

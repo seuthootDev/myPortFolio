@@ -2,6 +2,8 @@
 
 Bilingual (English / 한국어) portfolio of Seunghoon Jung, a software developer building manufacturing digital twin tools and full-stack web apps. Built with [Astro](https://astro.build/) on top of the [AstroPaper](https://github.com/satnaing/astro-paper) theme.
 
+**Live:** <https://my-port-folio-tau-ashy.vercel.app/>
+
 ## What's in it
 
 - **Projects** — write-ups as Markdown, with a period, a company and a main image. Previews show the date range instead of a publish date.
@@ -63,7 +65,7 @@ description: "…"
 
 Site name, description and social links live in `astro-paper.config.ts`.
 
-- **`site.url`** must be set to the deployed address (it is used for canonical links, the sitemap, share images and the PDF's links).
+- **`site.url`** is the deployed address. It is used for canonical links, the sitemap, share images and the PDF's links, so update it if the site moves to another domain.
 - The GitHub API allows 60 unauthenticated requests per hour per IP. If builds hit the limit, provide a `GITHUB_TOKEN` environment variable; the build reads it automatically.
 
 ## Credits
