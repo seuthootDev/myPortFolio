@@ -24,9 +24,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      // /portfolio/ is a private PDF builder: keep it out of the sitemap.
+      // Keep out of the sitemap: /portfolio/ (private PDF builder) and the
+      // search page while search is turned off (it renders the 404 page).
       filter: page =>
         !page.includes("/portfolio/") &&
+        (config.features?.search === "pagefind" ||
+          !page.includes("/search/")) &&
         (config.features?.showArchives !== false ||
           !page.endsWith("/archives/")),
     }),
