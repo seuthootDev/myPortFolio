@@ -1,25 +1,14 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
 import { fontData, experimental_getFontFileURL } from "astro:assets";
 import satori from "satori";
 import sharp from "sharp";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
-import { getPostSlug } from "@/utils/getPostPaths";
+import { getOgImagePaths } from "@/utils/staticPaths";
 import config from "@/config";
 
+// English posts only; see the OG note in `index.astro`.
 export async function getStaticPaths() {
-  if (!config.features.dynamicOgImage) {
-    return [];
-  }
-
-  const posts = await getCollection("posts").then(p =>
-    p.filter(({ data }) => !data.draft && !data.ogImage)
-  );
-
-  return posts.map(post => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
-    props: post,
-  }));
+  return getOgImagePaths("en");
 }
 
 export const GET: APIRoute = async ({ props, url }) => {

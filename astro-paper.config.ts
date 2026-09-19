@@ -3,13 +3,14 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://astro-paper.pages.dev/",
-    title: "AstroPaper",
-    description: "A minimal, responsive and SEO-friendly Astro blog theme.",
-    author: "Sat Naing",
-    profile: "https://satna.ing",
+    title: "Seunghoon Jung",
+    description:
+      "Portfolio of Seunghoon Jung, a software developer building manufacturing digital twin tools and full-stack web apps.",
+    author: "Seunghoon Jung",
+    profile: "https://github.com/seuthootDev",
     ogImage: "default-og.jpg",
     lang: "en",
-    timezone: "Asia/Bangkok",
+    timezone: "Asia/Seoul",
     dir: "ltr",
   },
   posts: {
@@ -22,17 +23,14 @@ export default defineAstroPaperConfig({
     dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
-    editPost: {
-      enabled: true,
-      url: "https://github.com/satnaing/astro-paper/edit/main/",
-    },
-    search: "pagefind",
+    editPost: { enabled: false },
+    search: false,
   },
   socials: [
-    { name: "github",   url: "https://github.com/satnaing/astro-paper" },
-    { name: "x",        url: "https://x.com/username" },
-    { name: "linkedin", url: "https://www.linkedin.com/in/username/" },
-    { name: "mail",     url: "mailto:yourmail@gmail.com" },
+    { name: "github",   url: "https://github.com/seuthootDev" },
+    { name: "x",        url: "https://x.com/Seuthoot" },
+    { name: "linkedin", url: "https://www.linkedin.com/in/seunghoon-jung-38b270335/" },
+    { name: "mail",     url: "mailto:seuthootdev@gmail.com" },
   ],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },

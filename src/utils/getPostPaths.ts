@@ -1,6 +1,7 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { BLOG_PATH } from "@/content.config";
 import { slugifyStr } from "./slugify";
+import { isLocale } from "./locales";
 import config from "@/config";
 
 function getPostPathSegments(filePath: string | undefined): string[] {
@@ -11,6 +12,8 @@ function getPostPathSegments(filePath: string | undefined): string[] {
       .filter(path => path !== "")
       .filter(path => !path.startsWith("_"))
       .slice(0, -1)
+      // The leading locale folder (`en/`, `ko/`) is not part of the URL slug.
+      .filter((segment, index) => !(index === 0 && isLocale(segment)))
       .map(segment => slugifyStr(segment)) ?? []
   );
 }

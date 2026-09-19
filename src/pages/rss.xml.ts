@@ -1,11 +1,12 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
+import { getLocalizedPosts } from "@/utils/getLocalizedPosts";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { getPostUrl } from "@/utils/getPostPaths";
 import config from "@/config";
 
 export async function GET() {
-  const posts = await getCollection("posts");
+  // English feed only; feed links use the default locale's URLs.
+  const posts = await getLocalizedPosts("en");
   const sortedPosts = getSortedPosts(posts);
 
   return rss({

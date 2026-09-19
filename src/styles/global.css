@@ -5,6 +5,11 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* Korean pages use Monoplex KR (loaded only when lang="ko"; see Layout.astro). */
+html[lang="ko"] body {
+  font-family: var(--font-monoplex-kr);
+}
+
 @layer base {
   * {
     @apply border-border outline-accent/75;

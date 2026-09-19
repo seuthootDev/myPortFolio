@@ -15,3 +15,5 @@
 
 # Ignore MDX files
 *.mdx
+# Third-party license text, kept verbatim
+src/assets/fonts/LICENSE-Monoplex.md

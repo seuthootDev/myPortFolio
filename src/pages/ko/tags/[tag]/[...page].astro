@@ -1,0 +1,11 @@
+---
+// Korean counterpart of /tags/<tag>.
+import type { GetStaticPaths } from "astro";
+import TagPage from "@/pages/tags/[tag]/[...page].astro";
+import { paginateTags } from "@/utils/staticPaths";
+
+export const getStaticPaths = (({ paginate }) =>
+  paginateTags(paginate, "ko")) satisfies GetStaticPaths;
+---
+
+<TagPage {...Astro.props} />

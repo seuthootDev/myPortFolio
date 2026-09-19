@@ -13,6 +13,18 @@ const posts = defineCollection({
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
       title: z.string(),
+      // Posts are all "projects"; open source entries are a separate collection.
+      category: z.enum(["projects"]).default("projects"),
+      // Project duration (`YYYY-MM`). Shown instead of the date in previews;
+      // omit `end` for an ongoing project.
+      period: z
+        .object({ start: z.coerce.date(), end: z.coerce.date().optional() })
+        .optional(),
+      // Company the project was done at; shown next to `period`.
+      company: z.string().optional(),
+      // Main picture of the project (an image URL), used in the portfolio PDF.
+      // Falls back to `ogImage` when omitted.
+      mainImage: z.string().optional(),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["others"]),
@@ -22,6 +34,20 @@ const posts = defineCollection({
       hideEditPost: z.boolean().optional(),
       timezone: z.string().optional(),
     }),
+});
+
+// One JSON file per repository. Only `repo` is required: the name, description
+// and star count are fetched from GitHub at build time. `title` optionally
+// overrides the repository name.
+const openSource = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.json", base: "./src/content/open-source" }),
+  schema: z.object({
+    repo: z.url(),
+    title: z.string().optional(),
+    // Shown on the card and listed on the tag pages, next to posts. Use the same
+    // names as post tags so a tag page groups both.
+    tags: z.array(z.string()).default([]),
+  }),
 });
 
 const pages = defineCollection({
@@ -34,4 +60,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, pages };
+export const collections = { posts, openSource, pages };

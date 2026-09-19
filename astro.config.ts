@@ -24,15 +24,20 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // /portfolio/ is a private PDF builder: keep it out of the sitemap.
       filter: page =>
-        config.features?.showArchives !== false || !page.endsWith("/archives/"),
+        !page.includes("/portfolio/") &&
+        (config.features?.showArchives !== false ||
+          !page.endsWith("/archives/")),
     }),
   ],
   i18n: {
-    locales: ["en"],
+    locales: ["en", "ko"],
     defaultLocale: "en",
+    fallback: { ko: "en" },
     routing: {
       prefixDefaultLocale: false,
+      fallbackType: "rewrite",
     },
   },
   markdown: {
@@ -59,6 +64,29 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   fonts: [
+    // Font for Korean pages (`lang="ko"`): covers both Latin (IBM Plex Mono) and
+    // Hangul so the two blend. The bold file is the Nerd-patched build, the only
+    // bold published on npm; glyphs are identical.
+    {
+      name: "Monoplex KR",
+      cssVariable: "--font-monoplex-kr",
+      provider: fontProviders.local(),
+      fallbacks: ["monospace"],
+      options: {
+        variants: [
+          {
+            weight: 400,
+            style: "normal",
+            src: ["./src/assets/fonts/monoplexkr-regular-400.woff2"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./src/assets/fonts/monoplexkrnerd-bold-700.woff2"],
+          },
+        ],
+      },
+    },
     {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",

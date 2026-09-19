@@ -1,0 +1,13 @@
+---
+// Korean counterpart of /posts/<slug>. The i18n fallback rewrite can't reach the
+// English post route in dev (posts/[...page] shadows it), and Korean posts have
+// their own content, so this is a real route.
+import Post from "@/pages/posts/[...slug]/index.astro";
+import { getPostPaths } from "@/utils/staticPaths";
+
+export async function getStaticPaths() {
+  return getPostPaths("ko");
+}
+---
+
+<Post {...Astro.props} />

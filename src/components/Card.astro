@@ -3,9 +3,10 @@ import type { CollectionEntry } from "astro:content";
 import { getPostUrl } from "@/utils/getPostPaths";
 import { toTransitionName } from "@/utils/toTransitionName";
 import Datetime from "./Datetime.astro";
+import Period from "./Period.astro";
 
 type Props = {
-  variant?: "h2" | "h3";
+  variant?: "h2" | "h3" | "h4";
 } & CollectionEntry<"posts">;
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
@@ -26,6 +27,12 @@ const { title, description, ...props } = data;
       {title}
     </Heading>
   </a>
-  <Datetime {...props} />
+  {
+    props.period ? (
+      <Period {...props.period} company={props.company} />
+    ) : (
+      <Datetime {...props} />
+    )
+  }
   <p>{description}</p>
 </li>

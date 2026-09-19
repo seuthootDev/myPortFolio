@@ -1,3 +1,8 @@
+export interface CategoryStrings {
+  label: string;
+  desc: string;
+}
+
 export interface UIStrings {
   nav: {
     home: string;
@@ -10,6 +15,7 @@ export interface UIStrings {
   post: {
     publishedAt: string;
     updatedAt: string;
+    present: string;
     sharePostIntro: string;
     sharePostOn: string;
     sharePostViaEmail: string;
@@ -26,10 +32,39 @@ export interface UIStrings {
     page: string;
   };
   home: {
+    greeting: string;
+    intro: string;
+    explore: string;
     socialLinks: string;
     featured: string;
     recentPosts: string;
     allPosts: string;
+    recentPrefix: string;
+    allPrefix: string;
+    empty: string;
+  };
+  categories: Record<"projects" | "open-source", CategoryStrings>;
+  openSource: {
+    stars: string;
+  };
+  about: {
+    photoAlt: string;
+  };
+  portfolio: {
+    name: string;
+    title: string;
+    desc: string;
+    include: string;
+    intro: string;
+    images: string;
+    details: string;
+    preparing: string;
+    gifNote: string;
+    reset: string;
+    save: string;
+    nothing: string;
+    note: string;
+    resume: string;
   };
   footer: {
     copyright: string;
@@ -56,6 +91,7 @@ export interface UIStrings {
     openMenu: string;
     closeMenu: string;
     toggleTheme: string;
+    switchLanguage: string;
     searchPlaceholder: string;
     noResults: string;
     goToPreviousPage: string;

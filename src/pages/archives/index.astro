@@ -1,13 +1,16 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
+import RepoCard from "@/components/RepoCard.astro";
 import { postFilter } from "@/utils/postFilter";
+import { getLocalizedPosts } from "@/utils/getLocalizedPosts";
+import { getOpenSourceItems } from "@/utils/getOpenSourceItems";
+import { toLocale } from "@/utils/locales";
 import { getPostsByGroupCondition } from "./_utils/getPostsByGroupCondition";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -22,8 +25,48 @@ if (!config.features.showArchives && notFoundUrl) {
 
 const t = useTranslations(locale);
 
-const posts = await getCollection("posts");
-const filteredPosts = posts.filter(postFilter);
+const posts = (await getLocalizedPosts(toLocale(locale))).filter(postFilter);
+const repos = await getOpenSourceItems();
+
+type Post = (typeof posts)[number];
+type Repo = (typeof repos)[number];
+type ArchiveEntry = { date: Date; year: number; month: number } & (
+  { kind: "post"; post: Post } | { kind: "repo"; repo: Repo }
+);
+
+// Where each entry sits on the timeline:
+// - a post with a `period` goes where the project started, so a long project
+//   doesn't leave a gap behind it; other posts use their publish date
+// - an open source repository goes where it was created; one whose date
+//   couldn't be fetched is left out rather than guessed
+// A `period.start` is a `YYYY-MM` read as midnight UTC, so it is split in UTC.
+const entries: ArchiveEntry[] = [
+  ...posts.map(post => {
+    const start = post.data.period?.start;
+    const date = start ?? post.data.pubDatetime;
+    return {
+      kind: "post" as const,
+      post,
+      date,
+      year: start ? start.getUTCFullYear() : date.getFullYear(),
+      month: (start ? start.getUTCMonth() : date.getMonth()) + 1,
+    };
+  }),
+  ...repos.flatMap(repo =>
+    repo.createdAt
+      ? [
+          {
+            kind: "repo" as const,
+            repo,
+            date: repo.createdAt,
+            year: repo.createdAt.getFullYear(),
+            month: repo.createdAt.getMonth() + 1,
+          },
+        ]
+      : []
+  ),
+];
+
 const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 ---
 
@@ -34,21 +77,14 @@ const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 
   <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
     {
-      Object.entries(
-        getPostsByGroupCondition(filteredPosts, post =>
-          post.data.pubDatetime.getFullYear()
-        )
-      )
+      Object.entries(getPostsByGroupCondition(entries, entry => entry.year))
         .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
         .map(([year, yearGroup]) => (
           <div>
             <span class="text-2xl font-bold">{year}</span>
             <sup class="text-muted-foreground text-sm">{yearGroup.length}</sup>
             {Object.entries(
-              getPostsByGroupCondition(
-                yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
-              )
+              getPostsByGroupCondition(yearGroup, entry => entry.month)
             )
               .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
               .map(([month, monthGroup]) => (
@@ -65,18 +101,21 @@ const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
                   </div>
                   <ul>
                     {monthGroup
-                      .sort(
-                        (a, b) =>
-                          Math.floor(
-                            new Date(b.data.pubDatetime).getTime() / 1000
-                          ) -
-                          Math.floor(
-                            new Date(a.data.pubDatetime).getTime() / 1000
-                          )
-                      )
-                      .map(data => (
-                        <Card {...data} />
-                      ))}
+                      .sort((a, b) => b.date.getTime() - a.date.getTime())
+                      .map(entry =>
+                        entry.kind === "post" ? (
+                          <Card {...entry.post} />
+                        ) : (
+                          <RepoCard
+                            id={entry.repo.id}
+                            url={entry.repo.url}
+                            title={entry.repo.title}
+                            description={entry.repo.description}
+                            stars={entry.repo.stars}
+                            tags={entry.repo.tags}
+                          />
+                        )
+                      )}
                   </ul>
                 </div>
               ))}

@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths } from "astro";
+import CategoryPage from "@/components/CategoryPage.astro";
+import { paginateCategory } from "@/utils/staticPaths";
+
+export const getStaticPaths = (({ paginate }) =>
+  paginateCategory(paginate, "projects", "ko")) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<CategoryPage id="projects" {page} />

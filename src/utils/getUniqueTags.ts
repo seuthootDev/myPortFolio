@@ -14,10 +14,15 @@ type Tag = {
  * - `tag` is the slug used in URLs; `tagName` is the original label for display
  * - Uniqueness is based on the slug (so differently-cased labels collapse)
  */
-export function getUniqueTags(posts: CollectionEntry<"posts">[]) {
-  const tags: Tag[] = posts
-    .filter(postFilter)
-    .flatMap(post => post.data.tags)
+export function getUniqueTags(
+  posts: CollectionEntry<"posts">[],
+  /** Tags from other content (e.g. open source entries) to list as well. */
+  extraTags: string[] = []
+) {
+  const tags: Tag[] = [
+    ...posts.filter(postFilter).flatMap(post => post.data.tags),
+    ...extraTags,
+  ]
     .map(tag => ({ tag: slugifyStr(tag), tagName: tag }))
     .filter(
       (value, index, self) =>

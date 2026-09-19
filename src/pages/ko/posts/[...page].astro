@@ -1,0 +1,12 @@
+---
+// Korean counterpart of /posts. Renders the English page component with
+// Korean paths; UI strings come from `Astro.currentLocale`.
+import type { GetStaticPaths } from "astro";
+import PostsPage from "@/pages/posts/[...page].astro";
+import { paginatePosts } from "@/utils/staticPaths";
+
+export const getStaticPaths = (({ paginate }) =>
+  paginatePosts(paginate, "ko")) satisfies GetStaticPaths;
+---
+
+<PostsPage {...Astro.props} />
