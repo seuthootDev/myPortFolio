@@ -72,6 +72,7 @@ export default {
     nothing: "Nothing selected.",
     note: "Links stay clickable in the PDF. Videos show their poster image and GIFs their first frame.",
     resume: "Resume",
+    website: "Portfolio",
   },
   footer: {
     copyright: "Copyright",

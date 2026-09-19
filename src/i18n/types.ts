@@ -65,6 +65,7 @@ export interface UIStrings {
     nothing: string;
     note: string;
     resume: string;
+    website: string;
   };
   footer: {
     copyright: string;

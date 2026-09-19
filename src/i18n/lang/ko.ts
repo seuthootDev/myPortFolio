@@ -72,10 +72,11 @@ export default {
     nothing: "선택된 항목이 없습니다.",
     note: "링크는 PDF에서도 클릭됩니다. 영상은 대표 이미지로, GIF는 첫 화면으로 들어갑니다.",
     resume: "이력서",
+    website: "포트폴리오",
   },
   footer: {
     copyright: "Copyright",
-    allRightsReserved: "모든 권리 보유.",
+    allRightsReserved: "All rights reserved.",
   },
   pages: {
     tagTitle: "태그",

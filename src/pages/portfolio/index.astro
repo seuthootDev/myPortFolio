@@ -81,6 +81,12 @@ const socialLabels: Record<string, string> = {
   mail: "Email",
 };
 const contacts = [
+  // This portfolio itself, so a printed copy points back to the live site.
+  {
+    label: t.portfolio.website,
+    href: config.site.url,
+    text: shortUrl(config.site.url),
+  },
   ...config.socials.map(({ name, url }) => ({
     label: socialLabels[name] ?? name,
     href: url,
