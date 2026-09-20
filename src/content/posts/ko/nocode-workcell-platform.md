@@ -1,6 +1,7 @@
 ---
 title: "No-Code 워크셀 가상 커미셔닝 및 제어 통합 플랫폼"
 pubDatetime: 2025-10-01T09:00:00+09:00
+modDatetime: 2026-09-21T09:00:00+09:00
 period:
   start: 2025-10
 company: (주)코드플렉스

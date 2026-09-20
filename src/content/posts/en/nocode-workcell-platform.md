@@ -1,6 +1,7 @@
 ---
 title: "No-Code Workcell Virtual Commissioning & Control Platform"
 pubDatetime: 2025-10-01T09:00:00+09:00
+modDatetime: 2026-09-21T09:00:00+09:00
 period:
   start: 2025-10
 company: Codeflex Co., Ltd.
