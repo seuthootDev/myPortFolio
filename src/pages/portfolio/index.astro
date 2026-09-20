@@ -338,6 +338,12 @@ const buttonClass =
     color: var(--muted-foreground);
   }
 
+  /* A GIF in a row of pictures: one still with its note underneath. */
+  .pf-row-cell .pf-frames-note {
+    margin: 4px 0 0;
+    font-size: 0.7rem;
+  }
+
   @media print {
     @page {
       size: A4;
@@ -491,9 +497,12 @@ const buttonClass =
     const decoder = new ImageDecoder({ data, type: "image/gif" });
     await decoder.tracks.ready;
     const count = decoder.tracks.selectedTrack.frameCount;
-    const indexes = [
-      ...new Set([0.1, 0.5, 0.9].map(p => Math.round(p * (count - 1)))),
-    ];
+    // A GIF that sits in a row of pictures keeps its cell: one still and a
+    // short note, instead of a three-still strip that would break the row.
+    const inRow = img.closest(".img-row") !== null;
+    const indexes = inRow
+      ? [0]
+      : [...new Set([0.1, 0.5, 0.9].map(p => Math.round(p * (count - 1))))];
 
     const wrap = document.createElement("div");
     wrap.className = "pf-frames";
@@ -511,6 +520,7 @@ const buttonClass =
       const frame = document.createElement("img");
       frame.src = canvas.toDataURL("image/jpeg", 0.85);
       frame.alt = img.alt;
+      if (inRow) frame.style.cssText = img.style.cssText;
       wrap.append(frame);
     }
     decoder.close();
@@ -521,6 +531,12 @@ const buttonClass =
     caption.textContent = note;
     if (url) (caption as HTMLAnchorElement).href = url;
 
+    if (inRow) {
+      wrap.className = "pf-row-cell";
+      wrap.append(caption);
+      img.replaceWith(wrap);
+      return;
+    }
     img.replaceWith(wrap, caption);
   }
 
