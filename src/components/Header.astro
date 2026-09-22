@@ -178,6 +178,7 @@ const switchHref = getRelativeLocaleUrl(
             id="lang-switch"
             href={switchHref}
             hreflang={otherLocale}
+            data-lang={otherLocale}
             class="focus-outline relative size-8"
             title={`${t.a11y.switchLanguage}: ${otherLanguageName}`}
             aria-label={`${t.a11y.switchLanguage}: ${otherLanguageName}`}
@@ -247,9 +248,25 @@ const switchHref = getRelativeLocaleUrl(
     });
   }
 
+  function handleLangSwitch() {
+    const langSwitch = document.querySelector<HTMLAnchorElement>("#lang-switch");
+    if (!langSwitch) return;
+
+    langSwitch.addEventListener("click", () => {
+      const nextLang = langSwitch.dataset.lang;
+      if (!nextLang) return;
+      // Remembers the visitor's explicit choice so the geo-based redirect
+      // in middleware.ts never overrides it on later visits.
+      document.cookie = `lang=${nextLang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    });
+  }
+
   toggleNav();
   document.addEventListener("astro:after-swap", toggleNav);
 
   handleSkipToContent();
   document.addEventListener("astro:after-swap", handleSkipToContent);
+
+  handleLangSwitch();
+  document.addEventListener("astro:after-swap", handleLangSwitch);
 </script>
