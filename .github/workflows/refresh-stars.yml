@@ -1,0 +1,20 @@
+name: Refresh open-source data
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    # 03:00 KST daily (18:00 UTC the day before)
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    name: Trigger Vercel redeploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - name: "🚀 Call Vercel deploy hook"
+        run: curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
