@@ -7,6 +7,7 @@ export type OpenSourceItem = {
   title: string;
   description: string;
   stars: number | null;
+  forks: number | null;
   /** Repository creation date, used to place it in the archives. */
   createdAt: Date | null;
   tags: string[];
@@ -29,6 +30,7 @@ export async function getOpenSourceItems(): Promise<OpenSourceItem[]> {
         title: data.title ?? repo.name,
         description: repo.description ?? "",
         stars: repo.stars,
+        forks: repo.forks,
         createdAt: repo.createdAt,
         tags: data.tags,
       };

@@ -5,6 +5,8 @@ export type GithubRepo = {
   description: string | null;
   /** `null` when GitHub couldn't be reached or the repo wasn't found. */
   stars: number | null;
+  /** `null` under the same conditions as `stars`. */
+  forks: number | null;
   /** When the repository was created; `null` under the same conditions. */
   createdAt: Date | null;
 };
@@ -29,6 +31,7 @@ async function fetchRepo(repoUrl: string): Promise<GithubRepo> {
     name,
     description: null,
     stars: null,
+    forks: null,
     createdAt: null,
   };
 
@@ -60,6 +63,8 @@ async function fetchRepo(repoUrl: string): Promise<GithubRepo> {
         typeof data.stargazers_count === "number"
           ? data.stargazers_count
           : null,
+      forks:
+        typeof data.forks_count === "number" ? data.forks_count : null,
       createdAt: data.created_at ? new Date(data.created_at) : null,
     };
   } catch (error) {

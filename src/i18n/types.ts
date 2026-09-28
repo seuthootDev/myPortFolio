@@ -46,6 +46,7 @@ export interface UIStrings {
   categories: Record<"projects" | "open-source", CategoryStrings>;
   openSource: {
     stars: string;
+    forks: string;
   };
   about: {
     photoAlt: string;

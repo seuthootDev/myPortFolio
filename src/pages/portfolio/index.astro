@@ -70,6 +70,7 @@ const repoItems = repos.map((repo, index) => ({
   description: repo.description,
   tags: repo.tags,
   stars: repo.stars,
+  forks: repo.forks,
   url: repo.url,
   isDefault: index < perIndex,
 }));
@@ -265,6 +266,11 @@ const buttonClass =
                 {item.stars !== null && (
                   <span class="text-muted-foreground ms-2 text-sm font-normal">
                     {`★ ${item.stars}`}
+                  </span>
+                )}
+                {!!item.forks && (
+                  <span class="text-muted-foreground ms-2 text-sm font-normal">
+                    {`⑂ ${item.forks}`}
                   </span>
                 )}
               </h3>

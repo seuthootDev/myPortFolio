@@ -53,6 +53,7 @@ export default {
   },
   openSource: {
     stars: "GitHub stars",
+    forks: "GitHub forks",
   },
   about: {
     photoAlt: "Photo of Seunghoon Jung",

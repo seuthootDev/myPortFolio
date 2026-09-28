@@ -53,6 +53,7 @@ export default {
   },
   openSource: {
     stars: "GitHub 스타",
+    forks: "GitHub 포크",
   },
   about: {
     photoAlt: "정승훈 프로필 사진",
