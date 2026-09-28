@@ -47,7 +47,7 @@ export default {
       desc: "Things I built at work.",
     },
     "open-source": {
-      label: "Open Source",
+      label: "Open Source Projects",
       desc: "Open source projects I build and maintain.",
     },
   },

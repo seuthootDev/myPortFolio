@@ -47,7 +47,7 @@ export default {
       desc: "회사에서 만든 작업들입니다.",
     },
     "open-source": {
-      label: "오픈소스",
+      label: "오픈소스 프로젝트",
       desc: "직접 만들고 운영하는 오픈소스 프로젝트입니다.",
     },
   },
