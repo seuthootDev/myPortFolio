@@ -48,6 +48,7 @@ export default {
     },
     "open-source": {
       label: "Open Source Projects",
+      navLabel: "Open Source",
       desc: "Open source projects I build and maintain.",
     },
   },

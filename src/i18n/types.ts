@@ -1,5 +1,7 @@
 export interface CategoryStrings {
   label: string;
+  /** Shorter label for the header menu; falls back to `label`. */
+  navLabel?: string;
   desc: string;
 }
 

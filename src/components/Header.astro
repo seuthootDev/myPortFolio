@@ -91,7 +91,7 @@ const switchHref = getRelativeLocaleUrl(
                 href={getRelativeLocaleUrl(locale, id)}
                 class:list={{ "active-nav": isActive(`/${id}`) }}
               >
-                {t.categories[id].label}
+                {t.categories[id].navLabel ?? t.categories[id].label}
               </a>
             </li>
           ))

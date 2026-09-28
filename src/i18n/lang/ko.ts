@@ -48,6 +48,7 @@ export default {
     },
     "open-source": {
       label: "오픈소스 프로젝트",
+      navLabel: "오픈소스",
       desc: "직접 만들고 운영하는 오픈소스 프로젝트입니다.",
     },
   },
